@@ -1,2 +1,2 @@
 # rust-structures
-Implementation of various data structurs / algorithm written from scratch in rust
+Implementation of various data structures / algorithms written from scratch in rust
