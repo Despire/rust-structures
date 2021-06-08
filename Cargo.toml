@@ -1,0 +1,8 @@
+[workspace]
+
+members = [
+    "sort/insertion",
+    "sort/bubble",
+    "sort/merge",
+    "sort/quick",
+]
