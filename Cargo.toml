@@ -6,5 +6,7 @@ members = [
     "sort/merge",
     "sort/quick",
 
+    "structures/ptr",
+
     "strings",
 ]
