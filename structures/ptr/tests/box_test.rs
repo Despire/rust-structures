@@ -21,7 +21,6 @@ fn test_box() {
     b.hello();
 
     dynamic(b);
-
 }
 
 fn dynamic(b: ptr::Box<dyn A>) {}

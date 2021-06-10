@@ -19,7 +19,6 @@ fn test_rc_ptr() {
 
     assert_eq!(2, ptr::Rc::strong_count(&first));
 
-
     consume_rc(second);
 
     assert_eq!(1, ptr::Rc::strong_count(&first));

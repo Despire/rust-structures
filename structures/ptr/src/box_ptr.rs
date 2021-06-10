@@ -48,7 +48,7 @@ impl<T: Sized> Box<T> {
             return Box {
                 ptr: NonNull::dangling(),
                 _marker: PhantomData,
-            }
+            };
         }
 
         // first allocate new memory.

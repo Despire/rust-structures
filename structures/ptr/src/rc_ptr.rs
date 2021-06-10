@@ -10,12 +10,12 @@ use std::ptr;
 use std::ptr::NonNull;
 
 use std::alloc;
-use std::alloc::Layout;
 use std::alloc::handle_alloc_error;
+use std::alloc::Layout;
 
 use std::marker;
-use std::marker::Unsize;
 use std::marker::PhantomData;
+use std::marker::Unsize;
 
 use std::ops::CoerceUnsized;
 use std::ops::DispatchFromDyn;
@@ -83,7 +83,7 @@ impl<T: Sized> Rc<T> {
 
     /// Gets the number of Rc pointing to the
     /// allocated heap memory of `T`
-    /// 
+    ///
     /// # Examples
     ///
     /// ```
@@ -95,9 +95,7 @@ impl<T: Sized> Rc<T> {
     /// assert_eq!(2, Rc::strong_count(&five));
     /// ```
     pub fn strong_count(&self) -> usize {
-        unsafe {
-            self.ptr.as_ref().rc
-        }
+        unsafe { self.ptr.as_ref().rc }
     }
 }
 
@@ -120,7 +118,7 @@ impl<T: ?Sized> Clone for Rc<T> {
 
         // abort on overflow.
         if rc == 0 || rc == usize::MAX {
-            panic!("overflow of reference count");
+            std::process::abort();
         }
 
         // increment ref count.
@@ -174,7 +172,6 @@ impl<T: ?Sized> AsRef<T> for Rc<T> {
         &rc_box.data
     }
 }
-
 
 impl<T: ?Sized, U: ?Sized> CoerceUnsized<Rc<U>> for Rc<T> where T: Unsize<U> {}
 impl<T: ?Sized, U: ?Sized> DispatchFromDyn<Rc<U>> for Rc<T> where T: Unsize<U> {}
