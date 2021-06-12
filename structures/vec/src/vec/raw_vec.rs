@@ -18,11 +18,11 @@ unsafe impl<T> Sync for RawVec<T> where T: Sync {}
 
 impl<T> RawVec<T> {
     pub fn new() -> Self {
-        assert!(std::mem::size_of::<T>() != 0, "ZST not supported yet");
+        let cap = if std::mem::size_of::<T>() == 0 { !0 } else { 0 };
 
         RawVec {
             buffer: NonNull::dangling(),
-            cap: 0,
+            cap,
             _marker: PhantomData,
         }
     }
@@ -36,6 +36,8 @@ impl<T> RawVec<T> {
     }
 
     pub fn grow(&mut self) {
+        assert!(std::mem::size_of::<T>() != 0, "capacity overflow");
+
         let (new_cap, layout) = if self.cap == 0 {
             (1, Layout::array::<T>(1).unwrap())
         } else {
@@ -77,7 +79,7 @@ impl<T> RawVec<T> {
 
 impl<T> Drop for RawVec<T> {
     fn drop(&mut self) {
-        if self.cap != 0 {
+        if self.cap != 0 && std::mem::size_of::<T>() != 0 {
             unsafe {
                 // dealocate the underlying buffer.
                 alloc::dealloc(
