@@ -8,6 +8,7 @@ members = [
 
     "structures/ptr",
     "structures/vec",
+    "structures/list",
 
     "strings",
 ]
